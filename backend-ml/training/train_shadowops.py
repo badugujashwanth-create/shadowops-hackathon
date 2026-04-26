@@ -615,7 +615,9 @@ def main():
         },
     }
 
-    with open("reward_curves_qwen3.json", "w") as f:
+    curve_path = Path(__file__).resolve().parent / "reports" / "train_shadowops_curves.json"
+    curve_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(curve_path, "w") as f:
         json.dump(curves, f, indent=2)
 
     # ── Summary ──────────────────────────────────────────────
@@ -641,7 +643,11 @@ def main():
     print(f"  FPR reduction heur→q-aware   : {curves['improvements']['fpr_reduction_qaw_vs_heur']:.1%}")
     if llama_results:
         print(f"\n  Best Qwen3 GRPO val reward   : {llama_results['best_val_reward']:+.1f}")
-    print(f"\n  reward_curves_qwen3.json saved")
+    try:
+        display_curve_path = curve_path.relative_to(Path.cwd())
+    except ValueError:
+        display_curve_path = curve_path
+    print(f"\n  {display_curve_path} saved")
     print(f"  Run plot_curves.py to generate graphs for your HuggingFace blog\n")
 
 

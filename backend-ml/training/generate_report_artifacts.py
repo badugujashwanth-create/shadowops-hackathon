@@ -5,10 +5,19 @@ from __future__ import annotations
 import json
 import shutil
 import struct
+import sys
 import zlib
 from pathlib import Path
 from typing import Any
 
+BACKEND_DIR = Path(__file__).resolve().parents[1]
+TRAINING_DIR = BACKEND_DIR / "training"
+REPORTS_DIR = TRAINING_DIR / "reports"
+
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
+
+from training.generate_reward_curves import generate_reward_curves
 from training.openenv_eval import generate_openenv_report
 from training.shadowops_training_common import (
     DEFAULT_DEMO_BENCHMARK_JSON,
@@ -21,11 +30,6 @@ from training.shadowops_training_common import (
     run_reward_diagnostics,
     write_json,
 )
-
-
-BACKEND_DIR = Path(__file__).resolve().parents[1]
-TRAINING_DIR = BACKEND_DIR / "training"
-REPORTS_DIR = TRAINING_DIR / "reports"
 
 
 def _display_path(path: Path) -> str:
@@ -81,21 +85,19 @@ def _write_reward_diagnostics(diagnostics: dict[str, Any], output_dir: Path) -> 
 
 
 def _write_reward_curve_note(output_dir: Path) -> None:
-    candidate_logs = [
-        BACKEND_DIR / "reward_curves_qwen3.json",
-        TRAINING_DIR / "reward_curves.json",
+    curve_report = generate_reward_curves()
+    lines = [
+        "# Reward Curve Artifact",
+        "",
+        "Reward curves are generated only from real `trainer_state.json` or `metrics.jsonl` artifacts.",
+        "",
+        f"Status: `{curve_report.get('status', 'UNKNOWN')}`",
+        "",
+        "Source files:",
     ]
-    existing = [path for path in candidate_logs if path.exists()]
-    lines = ["# Reward Curve Artifact", ""]
-    if not existing:
-        lines.append("No real training logs were found. Reward curve PNG is intentionally not generated.")
-    else:
-        png_path = output_dir / "reward_curve.png"
-        _write_reward_curve_png(existing[0], png_path)
-        lines.append("Real training log candidates were found:")
-        lines.extend(f"- `{path.relative_to(BACKEND_DIR)}`" for path in existing)
-        lines.append("")
-        lines.append(f"Generated PNG plot: `{png_path.name}`")
+    lines.extend(f"- `{path}`" for path in curve_report.get("source_files", []) or ["none"])
+    lines.extend(["", "Generated plot files:"])
+    lines.extend(f"- `{path}`" for path in curve_report.get("plots", []) or ["none"])
     (output_dir / "reward_curve_status.md").write_text("\n".join(lines), encoding="utf-8")
 
 

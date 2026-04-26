@@ -1,21 +1,40 @@
 {
-  "metrics_source": "demo_targets",
-  "metrics_note": "Demo target metrics used for charts because grpo_model metrics are unavailable in current artifacts.",
-  "curve_source_note": "reward curve uses demo trajectory (trainer logs unavailable).",
-  "plots": {
-    "reward_curve": "training\\plots\\reward_curve.png",
-    "accuracy_comparison": "training\\plots\\accuracy_comparison.png",
-    "ablation_reward_shaping": "training\\plots\\ablation_reward_shaping.png"
-  },
-  "table_markdown": "| Policy | Validation Accuracy | Avg Reward |\n| --- | ---: | ---: |\n| Random | 32% | -18.2 |\n| Heuristic | 67% | +14.7 |\n| Trained (GRPO) | 84% | +38.3 |",
-  "qualitative_example": {
-    "scenario": "Developer running integration tests from new IP",
-    "heuristic_output": "QUARANTINE (risk 0.62) -> blocks CI pipeline",
-    "trained_output": "ALLOW",
-    "explanation": "Model learned that User-Agent: pytest/* plus sequential endpoint access is a benign test pattern that heuristic thresholds over-penalize."
-  },
-  "artifact_status": {
-    "qwen3_training_health_report_present": true,
-    "model_policy_comparison_present": true
-  }
+  "metrics_source": "training/demo_benchmark_report.json",
+  "metrics_note": "Current values are loaded only from real repository report artifacts.",
+  "training_curve_note": "Training curves are generated only from real trainer_state.json or metrics.jsonl artifacts.",
+  "rows": [
+    {
+      "policy": "Random",
+      "exact_match": 0.35,
+      "safety_accuracy": 0.8,
+      "unsafe_decision_rate": 0.2,
+      "false_positive_rate": 0.16279069767441862,
+      "reward_mean": 0.06534407000000003
+    },
+    {
+      "policy": "Heuristic",
+      "exact_match": 0.51,
+      "safety_accuracy": 0.92,
+      "unsafe_decision_rate": 0.08,
+      "false_positive_rate": 0.0,
+      "reward_mean": 1.14566684
+    },
+    {
+      "policy": "Q-aware",
+      "exact_match": 0.99,
+      "safety_accuracy": 1.0,
+      "unsafe_decision_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "reward_mean": 1.9203646
+    },
+    {
+      "policy": "Oracle",
+      "exact_match": 1.0,
+      "safety_accuracy": 1.0,
+      "unsafe_decision_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "reward_mean": 1.94186906
+    }
+  ],
+  "missing_model_metrics": "PENDING_REAL_ARTIFACT"
 }

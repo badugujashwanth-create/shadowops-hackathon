@@ -15,7 +15,8 @@
     "oracle_gap_analysis.md",
     "qaware_calibration_report.json",
     "qaware_calibration_report.md",
-    "reward_curve.png",
+    "reward_curve_data.json",
+    "reward_curve_report.md",
     "reward_curve_status.md",
     "reward_diagnostics.json",
     "reward_diagnostics.md"

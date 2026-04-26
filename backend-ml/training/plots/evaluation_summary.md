@@ -1,20 +1,16 @@
 ## ShadowOps Evaluation Summary
 
-> Note: metrics below are **demo target values** for publication visuals because measured `grpo_model` metrics are not available in current repo artifacts.
+> Metrics below are loaded only from real repository artifacts.
 
-> Reward-curve source: reward curve uses demo trajectory (trainer logs unavailable).
+> Training curves are generated only from real `trainer_state.json` or `metrics.jsonl` artifacts.
 
-| Policy | Validation Accuracy | Avg Reward |
-| --- | ---: | ---: |
-| Random | 32% | -18.2 |
-| Heuristic | 67% | +14.7 |
-| Trained (GRPO) | 84% | +38.3 |
+| Policy | exact_match | safety_accuracy | unsafe_decision_rate | false_positive_rate | reward_mean |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Random | 0.350 | 0.800 | 0.200 | 0.163 | 0.065 |
+| Heuristic | 0.510 | 0.920 | 0.080 | 0.000 | 1.146 |
+| Q-aware | 0.990 | 1.000 | 0.000 | 0.000 | 1.920 |
+| Oracle | 1.000 | 1.000 | 0.000 | 0.000 | 1.942 |
 
-### Key finding: reward shaping matters
-Without reward shaping, the policy can exploit incentives by over-quarantining. With corrected shaping, it learns discriminative action selection across benign and malicious patterns.
+### Pending Model Metrics
 
-### Qualitative win example
-- Scenario: Developer running integration tests from new IP
-- Heuristic output: `QUARANTINE` (risk `0.62`) -> blocks CI pipeline
-- Trained output: `ALLOW`
-- Why this matters: model learned that `User-Agent: pytest/*` plus sequential endpoints indicates benign test traffic, which threshold heuristics over-penalize.
+- trained checkpoint metrics: PENDING_REAL_ARTIFACT

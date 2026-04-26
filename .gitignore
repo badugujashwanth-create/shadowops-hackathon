@@ -3,11 +3,14 @@ __pycache__/
 backend-ml/unsloth_compiled_cache/
 unsloth_compiled_cache/
 backend-ml/shadowops_qwen3_*/
+!backend-ml/shadowops_qwen3_1p7b_model/
+!backend-ml/shadowops_qwen3_1p7b_model/**
 backend-ml/training/checkpoints/
 backend-ml/**/__pycache__/
 *.pt
 *.pth
 *.safetensors
+!backend-ml/shadowops_qwen3_1p7b_model/*.safetensors
 .venv311/
 __pycache__/
 *.pyc
@@ -17,5 +20,6 @@ unsloth_compiled_cache/
 *.pt
 *.pth
 *.bin
+!backend-ml/shadowops_qwen3_1p7b_model/*.safetensors
 training/checkpoints/
 !training/checkpoints/qwen3_sft_grpo_adapter_explore/

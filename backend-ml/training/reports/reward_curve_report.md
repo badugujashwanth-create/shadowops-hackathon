@@ -1,13 +1,11 @@
-# Reward Curve Artifact
+# Reward Curve Report
 
-Reward curves are generated only from real `trainer_state.json` or `metrics.jsonl` artifacts.
+- status: `PASS`
+- source files: training\trainer_state.json
+- notes: none
 
-Status: `PASS`
+## Plot Outputs
 
-Source files:
-- `training\trainer_state.json`
-
-Generated plot files:
 - `training/plots/reward_curve.png`
 - `training/plots/reward_std_curve.png`
 - `training/plots/completion_length_curve.png`

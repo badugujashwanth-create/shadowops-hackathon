@@ -14,6 +14,8 @@ Changes:
 import json
 import asyncio
 import logging
+import os
+from pathlib import Path
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -46,8 +48,10 @@ logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("shadowops")
 
 # ── Config ────────────────────────────────────────────────────
-USE_REAL_MODEL   = False
-LLAMA_MODEL_PATH = "./training/shadowops_model"
+USE_REAL_MODEL = os.getenv("USE_REAL_MODEL", "false").strip().lower() in {"1", "true", "yes", "on"}
+LLAMA_BASE_MODEL = os.getenv("SHADOWOPS_BASE_MODEL", "unsloth/Qwen3-1.7B")
+LLAMA_ADAPTER_PATH = os.getenv("SHADOWOPS_ADAPTER_PATH", "./shadowops_qwen3_1p7b_model")
+LLAMA_MAX_SEQ_LENGTH = int(os.getenv("SHADOWOPS_MAX_SEQ_LENGTH", "256"))
 DEMO_POLICY_NAME = "q_aware_demo_policy"
 VALID_DECISIONS = {"ALLOW", "BLOCK", "FORK", "QUARANTINE"}
 
@@ -60,16 +64,30 @@ def _load_llama():
     if _llama_model:
         return
     from unsloth import FastLanguageModel
+    adapter_path = Path(LLAMA_ADAPTER_PATH)
+    if not adapter_path.is_absolute():
+        adapter_path = Path(__file__).resolve().parent / adapter_path
+    if not adapter_path.exists():
+        raise FileNotFoundError(f"ShadowOps LoRA adapter not found: {adapter_path}")
     _llama_model, _llama_tokenizer = FastLanguageModel.from_pretrained(
-        model_name=LLAMA_MODEL_PATH, max_seq_length=512,
+        model_name=LLAMA_BASE_MODEL, max_seq_length=LLAMA_MAX_SEQ_LENGTH,
         dtype=None, load_in_4bit=True,
     )
+    try:
+        _llama_model.load_adapter(str(adapter_path))
+    except TypeError:
+        _llama_model.load_adapter(str(adapter_path), adapter_name="shadowops_grpo")
+    except AttributeError:
+        from peft import PeftModel
+
+        _llama_model = PeftModel.from_pretrained(_llama_model, str(adapter_path))
     FastLanguageModel.for_inference(_llama_model)
 
 
 def _infer_llama(prompt: str) -> str:
     import torch
-    inputs = _llama_tokenizer(prompt, return_tensors="pt").to("cuda")
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    inputs = _llama_tokenizer(prompt, return_tensors="pt").to(device)
     with torch.no_grad():
         out = _llama_model.generate(
             **inputs, max_new_tokens=5,
@@ -384,6 +402,8 @@ env = UniversalShadowEnv(mode="live", seed=99)
 def health():
     return {"status": "ok", "model": "llama" if USE_REAL_MODEL else "mock",
             "policy": "llama_model" if USE_REAL_MODEL else DEMO_POLICY_NAME,
+            "base_model": LLAMA_BASE_MODEL if USE_REAL_MODEL else None,
+            "adapter_path": LLAMA_ADAPTER_PATH if USE_REAL_MODEL else None,
             "version": "3.0.0", "action_space": ["ALLOW", "BLOCK", "FORK", "QUARANTINE"]}
 
 

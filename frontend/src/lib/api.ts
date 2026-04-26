@@ -1,12 +1,13 @@
-// API stub for future backend integration
-// For now, all functions return mock data
-
 import { SCENARIOS, Scenario } from '../data/scenarios'
 import { BENCHMARKS, BenchmarkRow } from '../data/benchmarks'
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'
 
 export interface HealthResponse {
   status: 'online' | 'offline'
   timestamp: string
+  policy?: string
+  model?: string
 }
 
 export interface DecisionResponse {
@@ -19,10 +20,34 @@ export interface BenchmarkResponse {
   benchmarks: BenchmarkRow[]
 }
 
+async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(init?.headers ?? {}),
+    },
+    ...init,
+  })
+  if (!response.ok) {
+    throw new Error(`Backend request failed: ${response.status}`)
+  }
+  return response.json() as Promise<T>
+}
+
 export async function getHealth(): Promise<HealthResponse> {
-  return {
-    status: 'online',
-    timestamp: new Date().toISOString(),
+  try {
+    const health = await fetchJson<{ status?: string; policy?: string; model?: string }>('/health')
+    return {
+      status: health.status === 'ok' ? 'online' : 'offline',
+      timestamp: new Date().toISOString(),
+      policy: health.policy,
+      model: health.model,
+    }
+  } catch {
+    return {
+      status: 'offline',
+      timestamp: new Date().toISOString(),
+    }
   }
 }
 
@@ -42,10 +67,46 @@ export async function getDecision(scenarioId: string): Promise<DecisionResponse>
       reason: 'Scenario not found',
     }
   }
-  return {
-    decision: scenario.decision,
-    confidence: scenario.confidence,
-    reason: scenario.reason,
+
+  try {
+    const result = await fetchJson<{
+      supervisor_decision?: {
+        decision?: DecisionResponse['decision']
+        action_taken?: DecisionResponse['decision']
+        confidence?: number
+        explanation?: string
+        safe_outcome?: string
+      }
+    }>('/decision', {
+      method: 'POST',
+      body: JSON.stringify({
+        domain: scenario.domain,
+        action: {
+          intent: scenario.intent,
+          raw_payload: scenario.payload,
+        },
+        actor: 'frontend-demo',
+        session_id: `frontend-${scenario.id}`,
+        service: scenario.domain,
+        environment: scenario.riskLevel === 'low' ? 'staging' : 'production',
+        provided_evidence: scenario.evidence?.result ? [scenario.evidence.result] : [],
+      }),
+    })
+    const supervisor = result.supervisor_decision ?? {}
+    return {
+      decision: supervisor.decision ?? supervisor.action_taken ?? scenario.decision,
+      confidence:
+        typeof supervisor.confidence === 'number'
+          ? Math.round(supervisor.confidence * 100)
+          : scenario.confidence,
+      reason: supervisor.explanation ?? supervisor.safe_outcome ?? scenario.reason,
+    }
+  } catch {
+    return {
+      decision: scenario.decision,
+      confidence: scenario.confidence,
+      reason: scenario.reason,
+    }
   }
 }
 

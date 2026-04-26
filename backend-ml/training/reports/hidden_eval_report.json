@@ -7,16 +7,16 @@
       "policies": {
         "random": {
           "metrics": {
-            "exact_match": 0.36,
+            "exact_match": 0.35,
             "safety_accuracy": 0.8,
             "unsafe_decision_rate": 0.2,
             "false_positive_rate": 0.16279069767441862,
-            "reward_mean": 0.08253612000000003
+            "reward_mean": 0.06534407000000003
           },
           "confidence_intervals": {
             "exact_match": [
-              0.26592,
-              0.45408
+              0.2565139582611393,
+              0.44348604173886064
             ],
             "safety_accuracy": [
               0.7216,
@@ -32,41 +32,41 @@
             ]
           },
           "per_domain_exact": {
-            "AWS": 0.43902439024390244,
-            "GITHUB": 0.3142857142857143,
-            "SOC": 0.2916666666666667
+            "AWS": 0.4634146341463415,
+            "GITHUB": 0.2857142857142857,
+            "SOC": 0.25
           },
           "per_action_precision_recall": {
             "ALLOW": {
-              "precision": 0.375,
-              "recall": 0.2571428571428571
+              "precision": 0.4166666666666667,
+              "recall": 0.23809523809523808
             },
             "BLOCK": {
               "precision": 0.36363636363636365,
               "recall": 0.5333333333333333
             },
             "FORK": {
-              "precision": 0.45,
-              "recall": 0.32142857142857145
+              "precision": 0.35,
+              "recall": 0.35
             },
             "QUARANTINE": {
               "precision": 0.29411764705882354,
-              "recall": 0.45454545454545453
+              "recall": 0.43478260869565216
             }
           }
         },
         "heuristic": {
           "metrics": {
-            "exact_match": 0.52,
+            "exact_match": 0.51,
             "safety_accuracy": 0.92,
             "unsafe_decision_rate": 0.08,
             "false_positive_rate": 0.0,
-            "reward_mean": 1.1457713
+            "reward_mean": 1.14566684
           },
           "confidence_intervals": {
             "exact_match": [
-              0.42207843138511314,
-              0.6179215686148869
+              0.4120196019603921,
+              0.6079803980396079
             ],
             "safety_accuracy": [
               0.8668265329322979,
@@ -84,11 +84,11 @@
           "per_domain_exact": {
             "AWS": 0.43902439024390244,
             "GITHUB": 0.6,
-            "SOC": 0.5416666666666666
+            "SOC": 0.5
           },
           "per_action_precision_recall": {
             "ALLOW": {
-              "precision": 0.813953488372093,
+              "precision": 0.84,
               "recall": 1.0
             },
             "BLOCK": {
@@ -96,8 +96,8 @@
               "recall": 0.06666666666666667
             },
             "FORK": {
-              "precision": 0.5517241379310345,
-              "recall": 0.5714285714285714
+              "precision": 0.36363636363636365,
+              "recall": 0.4
             },
             "QUARANTINE": {
               "precision": 0.0,
@@ -111,7 +111,7 @@
             "safety_accuracy": 1.0,
             "unsafe_decision_rate": 0.0,
             "false_positive_rate": 0.0,
-            "reward_mean": 1.89905622
+            "reward_mean": 1.9203646
           },
           "confidence_intervals": {
             "exact_match": [
@@ -132,9 +132,9 @@
             ]
           },
           "per_domain_exact": {
-            "AWS": 0.975609756097561,
+            "AWS": 1.0,
             "GITHUB": 1.0,
-            "SOC": 1.0
+            "SOC": 0.9583333333333334
           },
           "per_action_precision_recall": {
             "ALLOW": {
@@ -146,12 +146,12 @@
               "recall": 1.0
             },
             "FORK": {
-              "precision": 1.0,
-              "recall": 0.9642857142857143
+              "precision": 0.9523809523809523,
+              "recall": 1.0
             },
             "QUARANTINE": {
-              "precision": 0.9565217391304348,
-              "recall": 1.0
+              "precision": 1.0,
+              "recall": 0.9565217391304348
             }
           }
         },
@@ -161,7 +161,7 @@
             "safety_accuracy": 1.0,
             "unsafe_decision_rate": 0.0,
             "false_positive_rate": 0.0,
-            "reward_mean": 1.92046906
+            "reward_mean": 1.94186906
           },
           "confidence_intervals": {
             "exact_match": [
