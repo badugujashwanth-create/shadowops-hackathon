@@ -8,9 +8,21 @@
 
 ShadowOps is an OpenEnv-compatible autonomous cybersecurity incident-response environment. It evaluates whether an agent should `ALLOW`, `BLOCK`, `FORK`, or `QUARANTINE` operational actions across GitHub CI/CD, cloud IAM, S3/public storage, firewall, pentest, deployment, and multi-step attack-chain scenarios.
 
-## Voltron Merge Status
+## Ownership and attribution
 
-This repository is the final master shell from `badugujashwanth-create/shadowops-hackathon` with the Qwen3-1.7B GRPO LoRA adapter transplanted from `ybaddam8-png/shadowops-hackathon`.
+GitHub correctly displays this repository as a fork of [`ybaddam8-png/shadowops-hackathon`](https://github.com/ybaddam8-png/shadowops-hackathon). It is a collaborative hackathon codebase and must not be read as a sole-authorship project.
+
+- The upstream repository contains the shared environment, training work, model artifacts, and later validation improvements.
+- The fork's pre-portfolio `main` contains two integration/submission commits authored by `machander-byte`, including the Qwen3 GRPO weight merge.
+- Git history also records a backend-agent contribution from `badugujashwanth-create` merged upstream through pull request #4.
+- The current `portfolio-polish` branch adds the lightweight test dependency correction, CI verification, portfolio documentation, and the safe dashboard demo/captions under Jashwanth Badugu's authorship.
+- The Qwen adapter and training evidence are collaborative/upstream artifacts. This account does not claim sole authorship of the training run or the reported model results.
+
+For an interview, the defensible individual contribution is the backend-agent work visible in history plus the fork's reproducibility, CI, documentation, and demo improvements. The project is therefore retained as collaborative/experimental work and is not selected as a top portfolio pin.
+
+## Model-artifact merge status
+
+This fork includes the Qwen3-1.7B GRPO LoRA adapter incorporated from the collaborative upstream work.
 
 Copied adapter path:
 
