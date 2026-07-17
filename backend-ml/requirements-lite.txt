@@ -3,3 +3,5 @@ rich
 pydantic
 numpy
 pytest
+fastapi
+matplotlib
