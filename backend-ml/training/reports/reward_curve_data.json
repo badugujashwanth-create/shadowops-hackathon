@@ -272,8 +272,8 @@
     0.0
   ],
   "comparison_sources": {
-    "model_policy_comparison": "D:\\projects\\shadowops-hackathon\\voltron-merge\\master-shadowops\\backend-ml\\training\\model_policy_comparison.json",
-    "reward_diagnostics": "D:\\projects\\shadowops-hackathon\\voltron-merge\\master-shadowops\\backend-ml\\training\\reports\\reward_diagnostics.json"
+    "model_policy_comparison": "training/model_policy_comparison.json",
+    "reward_diagnostics": "training/reports/reward_diagnostics.json"
   },
   "plots": [
     "training/plots/reward_curve.png",
