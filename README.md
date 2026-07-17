@@ -1,5 +1,11 @@
 # ShadowOps Hackathon
 
+> **Status: Experimental / Hackathon Prototype** — The lightweight backend suite and frontend checks pass; the CUDA training pipeline was not reproduced in this audit.
+
+[![Watch the ShadowOps demo](docs/demo/demo-thumbnail.png)](docs/demo/demo.webm)
+
+> Watch the locally recorded safety-dashboard overview; it does not claim that the CUDA training pipeline was rerun.
+
 ShadowOps is an OpenEnv-compatible autonomous cybersecurity incident-response environment. It evaluates whether an agent should `ALLOW`, `BLOCK`, `FORK`, or `QUARANTINE` operational actions across GitHub CI/CD, cloud IAM, S3/public storage, firewall, pentest, deployment, and multi-step attack-chain scenarios.
 
 ## Voltron Merge Status
