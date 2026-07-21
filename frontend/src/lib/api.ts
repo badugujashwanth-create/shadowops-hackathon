@@ -14,6 +14,7 @@ export interface DecisionResponse {
   decision: 'ALLOW' | 'BLOCK' | 'QUARANTINE' | 'FORK'
   confidence: number
   reason: string
+  source: 'backend' | 'fixture'
 }
 
 export interface BenchmarkResponse {
@@ -65,6 +66,7 @@ export async function getDecision(scenarioId: string): Promise<DecisionResponse>
       decision: 'QUARANTINE',
       confidence: 0,
       reason: 'Scenario not found',
+      source: 'fixture',
     }
   }
 
@@ -100,12 +102,14 @@ export async function getDecision(scenarioId: string): Promise<DecisionResponse>
           ? Math.round(supervisor.confidence * 100)
           : scenario.confidence,
       reason: supervisor.explanation ?? supervisor.safe_outcome ?? scenario.reason,
+      source: 'backend',
     }
   } catch {
     return {
       decision: scenario.decision,
       confidence: scenario.confidence,
       reason: scenario.reason,
+      source: 'fixture',
     }
   }
 }

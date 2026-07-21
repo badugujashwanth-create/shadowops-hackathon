@@ -37,7 +37,7 @@ export const Benchmarks: React.FC = () => {
 
       <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
         <p className="text-sm text-slate-300">
-          <span className="text-slate-400">📊 Demo Note:</span> GPU model training is pending. Current demo uses verified laptop-safe Q-aware policy.
+          <span className="text-slate-400">📊 Evidence boundary:</span> Values are loaded from the checked-in laptop-safe benchmark report. The CUDA checkpoint comparison was not reproduced in this audit.
         </p>
       </div>
     </div>

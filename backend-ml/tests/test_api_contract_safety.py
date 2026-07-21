@@ -9,6 +9,8 @@ if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 
 import main as api_main  # noqa: E402
+import pytest  # noqa: E402
+from fastapi import HTTPException  # noqa: E402
 from training.shadowops_training_common import build_q_aware_decision  # noqa: E402
 
 
@@ -41,6 +43,20 @@ def test_unknown_domain_contract_does_not_crash() -> None:
     )
 
     _assert_safe_contract(decision)
+
+
+@pytest.mark.parametrize(
+    ("provided", "expected"),
+    [("github", "GITHUB"), ("aws", "AWS"), ("iam", "AWS"), ("network", "SOC"), ("pentest", "SOC")],
+)
+def test_api_domain_aliases_match_environment_domains(provided: str, expected: str) -> None:
+    assert api_main._normalize_domain(provided) == expected
+
+
+def test_api_rejects_an_unsupported_domain_without_a_server_error() -> None:
+    with pytest.raises(HTTPException) as exc_info:
+        api_main._normalize_domain("unknown-vendor")
+    assert exc_info.value.status_code == 422
 
 
 def test_empty_evidence_and_empty_memory_contract() -> None:

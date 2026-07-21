@@ -530,7 +530,7 @@ def build_llama_prompt(domain: str, intent: str, raw_payload: str,
 # ─────────────────────────────────────────────────────────────
 
 def _now() -> str:
-    return datetime.datetime.utcnow().isoformat() + "Z"
+    return datetime.datetime.now(datetime.UTC).isoformat().replace("+00:00", "Z")
 
 
 def generate_incident_report(domain, intent, raw_payload, risk_vector, shadow_state):
@@ -905,14 +905,14 @@ class UniversalShadowEnv(_BaseEnvironment):
         else:
             self._suspicious_streak[domain] = 0
         if self._suspicious_streak[domain] >= QUARANTINE_THRESHOLD:
-            self._domain_quarantine[domain]  = datetime.datetime.utcnow()
+            self._domain_quarantine[domain] = datetime.datetime.now(datetime.UTC)
             self._suspicious_streak[domain]  = 0
 
     def _is_domain_quarantined(self, domain):
         qt = self._domain_quarantine.get(domain, None)
         if qt is None:
             return False
-        if (datetime.datetime.utcnow() - qt).total_seconds() > QUARANTINE_DURATION:
+        if (datetime.datetime.now(datetime.UTC) - qt).total_seconds() > QUARANTINE_DURATION:
             self._domain_quarantine[domain] = None
             return False
         return True

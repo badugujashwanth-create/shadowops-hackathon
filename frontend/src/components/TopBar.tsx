@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Activity, AlertCircle, Zap } from 'lucide-react'
 import { StatusIndicator } from './DecisionBadge'
+import { getHealth, HealthResponse } from '../lib/api'
 
 export const TopBar: React.FC = () => {
+  const [health, setHealth] = useState<HealthResponse | null>(null)
+
+  useEffect(() => {
+    let active = true
+    getHealth().then((result) => {
+      if (active) setHealth(result)
+    })
+    return () => {
+      active = false
+    }
+  }, [])
+
+  const status = health === null ? 'warning' : health.status
+  const statusLabel = health === null
+    ? 'Checking local backend'
+    : health.status === 'online'
+      ? `Local backend online · ${health.policy ?? 'policy unavailable'}`
+      : 'Fixture fallback · backend offline'
+
   return (
     <div className="fixed top-0 left-56 right-0 h-16 bg-slate-800 border-b border-slate-700 flex items-center px-8 gap-8 z-40">
       {/* Left section - Demo info */}
@@ -15,9 +35,9 @@ export const TopBar: React.FC = () => {
         </div>
         <div className="h-6 w-px bg-slate-700" />
         <div className="flex items-center gap-2">
-          <StatusIndicator status="online" />
+          <StatusIndicator status={status} />
           <span className="text-sm text-slate-300">
-            <span className="font-semibold">System Status:</span> Online
+            <span className="font-semibold">Runtime:</span> {statusLabel}
           </span>
         </div>
       </div>

@@ -1,16 +1,19 @@
-# ShadowOps Safety Lab demo script
+# ShadowOps local runtime walkthrough
 
-**Target length:** 60–90 seconds  
-**Format:** Browser/terminal  
-**Data:** synthetic, repository-provided demo data, or public non-personal examples only
+**Target length:** at least 3 minutes
 
-## Walkthrough
+**Format:** narrated 1280×720 browser recording with separate captions
 
-1. **Title (0–5s):** Show “ShadowOps Safety Lab” and its one-sentence problem statement.
-2. **Starting state (5–15s):** Show the clean entry point and identify the intended user.
-3. **Primary workflow (15–55s):** Load a replayable scenario; show the proposed action and risk/policy evidence; demonstrate a safe outcome; close with test evidence and the distinction between the lite runtime and CUDA training stack.
-4. **Architecture (55–75s):** Show the architecture guide and name the main runtime boundaries.
-5. **Close (75–90s):** Display the project name, badugujashwanth-create, current status, and one honest limitation.
+**Data:** repository-provided synthetic scenarios only
 
-Do not show environment files, tokens, browser bookmarks, notifications, real user accounts, or private URLs. Do not edit the footage to imply an integration succeeded when it did not.
+1. Establish collaborative-fork attribution and the laptop-safe, non-CUDA evidence boundary.
+2. Verify the local FastAPI Q-aware runtime is online.
+3. Inspect the GitHub supply-chain scenario, its risk evidence, and held decision.
+4. Select the synthetic S3 public-access scenario and run a real local `/decision` request.
+5. Demonstrate a local-only FORK override while showing that no external action executes.
+6. Inspect quarantine timelines and active synthetic holds.
+7. Inspect benchmark values loaded directly from the checked-in report.
+8. Review the incident report and return to Mission Control.
+9. Close on attribution, unverified CUDA checkpoint evaluation, and the no-release boundary.
 
+Do not show credentials, real accounts, private infrastructure, or imply that a local simulation changed an external system.

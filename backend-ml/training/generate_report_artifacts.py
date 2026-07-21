@@ -85,7 +85,7 @@ def _write_reward_diagnostics(diagnostics: dict[str, Any], output_dir: Path) -> 
 
 
 def _write_reward_curve_note(output_dir: Path) -> None:
-    curve_report = generate_reward_curves()
+    curve_report = generate_reward_curves(output_dir)
     lines = [
         "# Reward Curve Artifact",
         "",

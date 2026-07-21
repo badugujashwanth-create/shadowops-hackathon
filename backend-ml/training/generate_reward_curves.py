@@ -316,7 +316,7 @@ def _load_policy_comparison() -> tuple[dict[str, Any], str]:
     ]
     for candidate in candidates:
         if candidate.exists():
-            return _read_json(candidate), str(candidate)
+            return _read_json(candidate), candidate.relative_to(BACKEND_DIR).as_posix()
     return {}, "missing"
 
 
@@ -327,7 +327,7 @@ def _load_reward_diagnostics() -> tuple[dict[str, Any], str]:
     ]
     for candidate in candidates:
         if candidate.exists():
-            return _read_json(candidate), str(candidate)
+            return _read_json(candidate), candidate.relative_to(BACKEND_DIR).as_posix()
     return {}, "missing"
 
 
@@ -355,7 +355,8 @@ def _write_pending_stub_pngs() -> None:
 
 
 def generate_reward_curves(output_dir: Path | None = None) -> dict[str, Any]:
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    report_dir = output_dir or REPORTS_DIR
+    report_dir.mkdir(parents=True, exist_ok=True)
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     series, notes = collect_real_curve_series()
 
@@ -444,9 +445,9 @@ def generate_reward_curves(output_dir: Path | None = None) -> dict[str, Any]:
         plot_name: _non_empty(BACKEND_DIR / plot_name) for plot_name in payload["plots"]
     }
 
-    report_json = REPORTS_DIR / "reward_curve_data.json"
+    report_json = report_dir / "reward_curve_data.json"
     report_json.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    report_md = CURVE_REPORT_MD
+    report_md = report_dir / "reward_curve_report.md" if output_dir is not None else CURVE_REPORT_MD
     report_md.write_text(
         "\n".join(
             [
@@ -466,9 +467,6 @@ def generate_reward_curves(output_dir: Path | None = None) -> dict[str, Any]:
     payload["generated_plot_paths"] = payload["plots"]
     pending_warning = "No trainer_state.json or metrics.jsonl found; PENDING_REAL_TRAINING_LOGS."
     payload["warning"] = pending_warning if payload["status"] == "PENDING_REAL_TRAINING_LOGS" else None
-    if output_dir is not None:
-        # Compatibility parameter: outputs remain in standard training folders.
-        output_dir.mkdir(parents=True, exist_ok=True)
     return payload
 
 

@@ -10,9 +10,8 @@
 
 ## Record
 
-For a web-capable build, run scripts/record-demo.ps1 with the healthy local BaseUrl. The Playwright specification captures an overview screenshot, thumbnail, and WebM video. Review every frame before committing it.
+Start both the laptop-safe FastAPI process and frontend, confirm `/health`, then run `scripts/record-demo.ps1` with the healthy frontend `BaseUrl`. The Playwright specification captures a 1280×720 overview, thumbnail, and real browser/API workflow.
 
 ## Post-production
 
-Trim loading time only; do not splice in fake success states. Add demo-captions.vtt. If FFmpeg is available, create a compressed MP4 and preview GIF, then verify size and readability. Never commit a large raw capture.
-
+Do not splice in fake success states. Mux the reviewed narration into MP4 and WebM, keep `demo-captions.vtt` beside both formats, and verify duration, codecs, dimensions, audio level, representative frames, and SHA-256 checksums. Commit only final deliverables.

@@ -16,11 +16,12 @@ import asyncio
 import logging
 import os
 from pathlib import Path
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from shadowops_env import (
+    DOMAINS,
     UniversalShadowEnv,
     extract_features,
     build_llama_prompt,
@@ -346,8 +347,23 @@ def _decide(
     return _safe_decision_details(details, domain=domain, risk_vector=risk_vector, ambiguity=ambiguity)
 
 
+_DOMAIN_ALIASES = {
+    "IAM": "AWS",
+    "NETWORK": "SOC",
+    "PENTEST": "SOC",
+}
+
+
+def _normalize_domain(value: str) -> str:
+    domain = value.strip().upper()
+    domain = _DOMAIN_ALIASES.get(domain, domain)
+    if domain not in DOMAINS:
+        raise HTTPException(status_code=422, detail=f"Unsupported ShadowOps domain: {value}")
+    return domain
+
+
 def _process_inbound(payload: InboundMessage) -> dict:
-    domain      = payload.domain
+    domain      = _normalize_domain(payload.domain)
     intent      = payload.action.intent
     raw_payload = payload.action.raw_payload
     risk_vector = extract_features(domain, intent, raw_payload)
