@@ -1,7 +1,10 @@
 import React from 'react'
 import { MetricCard } from '../components/DecisionBadge'
+import { BENCHMARKS } from '../data/benchmarks'
 
 export const Overview: React.FC = () => {
+  const qAware = BENCHMARKS.find((row) => row.isHighlight)
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -13,9 +16,9 @@ export const Overview: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        <MetricCard label="Safety Accuracy" value="100%" />
-        <MetricCard label="Unsafe Decisions" value={0} />
-        <MetricCard label="Exact Match" value="78.1%" />
+        <MetricCard label="Safety Accuracy" value={`${qAware?.safetyAccuracy ?? 0}%`} />
+        <MetricCard label="Unsafe Decision Rate" value={`${qAware?.unsafeDecisionRate ?? 0}%`} />
+        <MetricCard label="Exact Match" value={`${qAware?.exactMatch ?? 0}%`} />
         <MetricCard label="Active Quarantines" value={3} />
       </div>
 

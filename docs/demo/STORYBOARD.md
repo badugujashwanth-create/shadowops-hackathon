@@ -1,13 +1,11 @@
-# ShadowOps Safety Lab storyboard
+# Storyboard
 
-| Time | Frame | Evidence to show |
-|---:|---|---|
-| 0–5s | Title | Project name and concise problem statement |
-| 5–15s | Entry point | Intended user and starting screen/terminal |
-| 15–35s | Main action | First half of the real primary workflow |
-| 35–55s | Result | Actual response, state change, or validated output |
-| 55–75s | Architecture | Component boundaries from docs/ARCHITECTURE.md |
-| 75–90s | Close | Owner, status, limitation, and repository name |
-
-Use 1280×720 or 1920×1080 output. Leave short pauses after meaningful results and avoid rapid pointer movement.
-
+| Time | Screen | Evidence |
+|---|---|---|
+| 00:00–00:24 | Overview | Local backend status and repository-report metrics |
+| 00:24–00:50 | Mission Control | Synthetic GitHub supply-chain evidence |
+| 00:50–01:18 | S3 scenario | Bounded intent, payload, and risk vectors |
+| 01:18–01:52 | Live local evaluation | FastAPI decision and no-production-action status |
+| 01:52–02:18 | Local override and quarantine | Local-only FORK plus held-action workflow |
+| 02:18–02:46 | Benchmarks | Values sourced from the checked-in laptop-safe report |
+| 02:46–03:21 | Incident report and close | Report workflow, collaboration, and CUDA limitation |

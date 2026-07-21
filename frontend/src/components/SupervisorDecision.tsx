@@ -76,29 +76,30 @@ export const SupervisorDecision: React.FC<SupervisorDecisionProps> = ({
       )}
 
       <div className="pt-4 border-t border-slate-700 space-y-2">
+        <p className="text-xs text-amber-300 mb-3">Simulation controls only · no external action</p>
         <button
           onClick={onApprove}
           className="btn btn-success w-full"
         >
-          Approve
+          Set local ALLOW
         </button>
         <button
           onClick={onBlock}
           className="btn btn-danger w-full"
         >
-          Block
+          Set local BLOCK
         </button>
         <button
           onClick={onFork}
           className="btn btn-primary w-full"
         >
-          Fork to Human
+          Set local FORK
         </button>
         <button
           onClick={onReplay}
           className="btn btn-secondary w-full"
         >
-          Replay Scenario
+          Run local evaluation
         </button>
       </div>
     </div>

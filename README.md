@@ -2,11 +2,11 @@
 
 > **Status: Experimental / Hackathon Prototype** — The lightweight backend suite and frontend checks pass; the CUDA training pipeline was not reproduced in this audit.
 
-[![Watch the ShadowOps demo](docs/demo/demo-thumbnail.png)](https://jashwanth-portfolio-ten.vercel.app/work/shadowops/)
+[![Watch the ShadowOps demo](docs/demo/demo-thumbnail.png)](docs/demo/demo.mp4)
 
-[Open MP4](https://jashwanth-portfolio-ten.vercel.app/media/shadowops/demo.mp4) · [Download WebM](https://jashwanth-portfolio-ten.vercel.app/media/shadowops/demo.webm) · [Captions](https://jashwanth-portfolio-ten.vercel.app/media/shadowops/demo-captions.vtt)
+[Watch MP4](docs/demo/demo.mp4) · [Download WebM](docs/demo/demo.webm) · [Captions](docs/demo/demo-captions.vtt) · [Checksums](docs/demo/SHA256SUMS.txt)
 
-> Watch the locally recorded safety-dashboard overview; it does not claim that the CUDA training pipeline was rerun.
+> Watch the 3:20 narrated local-runtime walkthrough; it does not claim that the CUDA training pipeline was rerun.
 
 ShadowOps is an OpenEnv-compatible autonomous cybersecurity incident-response environment. It evaluates whether an agent should `ALLOW`, `BLOCK`, `FORK`, or `QUARANTINE` operational actions across GitHub CI/CD, cloud IAM, S3/public storage, firewall, pentest, deployment, and multi-step attack-chain scenarios.
 
@@ -17,7 +17,7 @@ GitHub correctly displays this repository as a fork of [`ybaddam8-png/shadowops-
 - The upstream repository contains the shared environment, training work, model artifacts, and later validation improvements.
 - The fork's pre-portfolio `main` contains two integration/submission commits authored by `machander-byte`, including the Qwen3 GRPO weight merge.
 - Git history also records a backend-agent contribution from `badugujashwanth-create` merged upstream through pull request #4.
-- The current `portfolio-polish` branch adds the lightweight test dependency correction, CI verification, portfolio documentation, and the safe dashboard demo/captions under Jashwanth Badugu's authorship.
+- The portfolio work adds the lightweight test dependency correction, CI verification, API boundary fixes, portfolio documentation, and the safe narrated demo/captions under Jashwanth Badugu's authorship.
 - The Qwen adapter and training evidence are collaborative/upstream artifacts. This account does not claim sole authorship of the training run or the reported model results.
 
 For an interview, the defensible individual contribution is the backend-agent work visible in history plus the fork's reproducibility, CI, documentation, and demo improvements. The project is therefore retained as collaborative/experimental work and is not selected as a top portfolio pin.
@@ -81,6 +81,8 @@ npm run dev
 ```
 
 The frontend API helper calls the FastAPI `/health` and `/decision` endpoints and falls back to local demo data if the backend is offline.
+
+The status bar reports the real local backend state. Scenario evaluation is labeled as either a local backend result or a fixture fallback, and all manual decision controls are explicitly local-only with no external action.
 
 ## Evaluation Commands
 

@@ -1,3 +1,5 @@
+import benchmarkReport from '../../../backend-ml/training/demo_benchmark_report.json'
+
 export interface BenchmarkRow {
   policy: string
   exactMatch: number
@@ -7,37 +9,14 @@ export interface BenchmarkRow {
   isHighlight?: boolean
 }
 
-export const BENCHMARKS: BenchmarkRow[] = [
-  {
-    policy: 'Random',
-    exactMatch: 50.0,
-    safetyAccuracy: 68.8,
-    unsafeDecisionRate: 31.2,
-    rewardMean: 0.531,
-  },
-  {
-    policy: 'Heuristic',
-    exactMatch: 46.9,
-    safetyAccuracy: 87.5,
-    unsafeDecisionRate: 12.5,
-    rewardMean: 0.891,
-  },
-  {
-    policy: 'Q-Aware Supervisor',
-    exactMatch: 78.1,
-    safetyAccuracy: 100,
-    unsafeDecisionRate: 0.0,
-    rewardMean: 1.672,
-    isHighlight: true,
-  },
-  {
-    policy: 'Oracle',
-    exactMatch: 100,
-    safetyAccuracy: 100,
-    unsafeDecisionRate: 0.0,
-    rewardMean: 2.0,
-  },
-]
+export const BENCHMARKS: BenchmarkRow[] = benchmarkReport.metrics.map((metric) => ({
+  policy: metric.policy === 'Q-aware' ? 'Q-Aware Supervisor' : metric.policy,
+  exactMatch: metric.exact_match * 100,
+  safetyAccuracy: metric.safety_accuracy * 100,
+  unsafeDecisionRate: metric.unsafe_decision_rate * 100,
+  rewardMean: metric.reward_mean,
+  isHighlight: metric.policy === 'Q-aware',
+}))
 
 export const BENCHMARK_CARDS = [
   {
@@ -46,8 +25,8 @@ export const BENCHMARK_CARDS = [
     status: 'verified' as const,
   },
   {
-    title: 'GPU Training Status',
-    value: 'Pending Cloud Run',
+    title: 'Checkpoint Evaluation',
+    value: 'Not Reproduced Locally',
     status: 'pending' as const,
   },
   {

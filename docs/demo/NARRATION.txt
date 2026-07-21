@@ -1,0 +1,17 @@
+This is ShadowOps, an experimental cybersecurity decision environment shown in its qualified laptop-safe mode. It is a collaborative hackathon fork, not a sole-authored product. Git history and the README separate upstream model and training artifacts from Jashwanth Badugu's backend-agent, reproducibility, CI, documentation, and demonstration work. The CUDA training pipeline and adapter comparison were not reproduced in this audit.
+
+The top bar is reading real health from the local FastAPI process. It identifies the Q-aware demo policy instead of claiming that a remote model or production supervisor is online. The overview metrics now come from the repository's checked-in benchmark report, so the dashboard and README share one evidence source.
+
+Mission Control begins with a synthetic poisoned pull-request scenario. The interface exposes the requested intent, a payload summary, risk vectors, MITRE mapping, confidence, and the repository fixture's supervisor reasoning. Nothing here connects to GitHub, CI secrets, or a real organization. The held decision is a replayable safety example.
+
+Next, the walkthrough selects a synthetic request to make an S3 bucket public. The browser sends this bounded scenario to the local decision endpoint. The API normalizes the frontend domain into the environment's canonical AWS domain, calculates the repository policy decision, and returns structured reasoning. The earlier lowercase-domain integration failure is covered by regression tests.
+
+The status line says that this is a local backend decision and that no production action executed. The local FORK control changes only the browser's demonstration state. It does not approve, block, fork, quarantine, or mutate any cloud, repository, account, firewall, or external service. That boundary matters more than a dramatic success animation.
+
+The quarantine view shows the synthetic held-action timeline and three repository fixtures awaiting evidence. This is a product explanation of how uncertainty could be surfaced for human review. It is not production telemetry, an incident queue, or proof that a security operations team used the system.
+
+The benchmark view loads its numbers directly from the checked-in laptop-safe report. In that artifact, the Q-aware policy records ninety-nine percent exact match, one hundred percent safety accuracy, and zero percent unsafe decision rate on the repository validation fixture. Those are artifact-scoped evaluation values, not a universal security guarantee. The CUDA checkpoint comparison remains explicitly not reproduced locally.
+
+The incident report turns the selected synthetic scenario into a readable summary, risk-evidence list, decision, and recommended review action. Returning to Mission Control completes the deterministic browser-to-local-API workflow. Lightweight verification covers forty backend tests, frontend type checking, production build, and dependency audit.
+
+ShadowOps should remain a collaborative experimental case study, not a top sole-authored portfolio claim. A release would require upstream and contributor agreement, reproducible model evaluation on approved hardware, artifact and license review, deployment ownership, and independent security validation. Until then, this walkthrough proves only the local runtime, transparent evidence boundaries, and the individual contributions documented in history.
