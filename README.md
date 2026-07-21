@@ -2,7 +2,9 @@
 
 > **Status: Experimental / Hackathon Prototype** — The lightweight backend suite and frontend checks pass; the CUDA training pipeline was not reproduced in this audit.
 
-[![Watch the ShadowOps demo](docs/demo/demo-thumbnail.png)](docs/demo/demo.webm)
+[![Watch the ShadowOps demo](docs/demo/demo-thumbnail.png)](https://jashwanth-portfolio-ten.vercel.app/work/shadowops/)
+
+[Open MP4](https://jashwanth-portfolio-ten.vercel.app/media/shadowops/demo.mp4) · [Download WebM](https://jashwanth-portfolio-ten.vercel.app/media/shadowops/demo.webm) · [Captions](https://jashwanth-portfolio-ten.vercel.app/media/shadowops/demo-captions.vtt)
 
 > Watch the locally recorded safety-dashboard overview; it does not claim that the CUDA training pipeline was rerun.
 
